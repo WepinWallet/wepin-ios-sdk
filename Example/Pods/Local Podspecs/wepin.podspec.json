@@ -1,0 +1,22 @@
+{
+  "name": "wepin",
+  "version": "0.1.0",
+  "summary": "A short description of wepin.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/guiseon.ryu@iotrust.kr/wepin",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "guiseon.ryu@iotrust.kr": "guiseon.ryu@iotrust.kr"
+  },
+  "source": {
+    "git": "https://github.com/guiseon.ryu@iotrust.kr/wepin.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "wepin/Classes/**/*"
+}

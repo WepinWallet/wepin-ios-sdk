@@ -1,0 +1,6 @@
+framework module Pods_wepin_Example {
+  umbrella header "Pods-wepin_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
