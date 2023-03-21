@@ -10,7 +10,6 @@
 		2398D4CC8A4E15B8742B0E36452516E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		458307D853FAC04362C8275FC676D0D9 /* wepin-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEE750CAEF6C2CBE3B1F3EA4A7FF97 /* wepin-dummy.m */; };
 		4B821CA7DCFB8D8FF2A0FD8C957C816B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		78A4BB6EFA76F1B646AB123B1FECB77C /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56766509BB00FB1B7E150EE0E10B355B /* ReplaceMe.swift */; };
 		880DECBDC196700FE5A25E4E23F4AE5B /* Pods-wepin_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F682D059F651D7D923D8B35C8715CB /* Pods-wepin_Example-dummy.m */; };
 		A7A5E6A9D2BB6174BB9D6E51E0C99B58 /* Pods-wepin_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C189335D039C9C3F2957B7C06CBBAEFB /* Pods-wepin_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B15BF62232F3E576802985F14A82B913 /* wepin-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 941B388D11162E371FECE36FCE5A8D41 /* wepin-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -37,7 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		025539005EA603EB9F2893C7197972C3 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		025539005EA603EB9F2893C7197972C3 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		061C614DB21871D82EAFD3526FFBB089 /* Pods-wepin_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-wepin_Example-frameworks.sh"; sourceTree = "<group>"; };
 		0ECAF10155914E96D245D3CA55CB377A /* wepin-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "wepin-prefix.pch"; sourceTree = "<group>"; };
 		0EF86CC267F2EBD9470E40FC3E4EA25C /* wepin-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "wepin-Info.plist"; sourceTree = "<group>"; };
@@ -47,16 +46,15 @@
 		44CA7267A71FE3774AAFD372CA2CFE2D /* Pods-wepin_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-wepin_Tests-Info.plist"; sourceTree = "<group>"; };
 		4CE4A0F87750659442062AE40F673686 /* Pods-wepin_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-wepin_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		52F488455D4C5AC7B7E4B511CE663FCE /* Pods-wepin_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-wepin_Tests-dummy.m"; sourceTree = "<group>"; };
-		56766509BB00FB1B7E150EE0E10B355B /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = wepin/Classes/ReplaceMe.swift; sourceTree = "<group>"; };
 		68066F375AB21F7A27B4F42C8F82748E /* Pods-wepin_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-wepin_Example-Info.plist"; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		8CF9C9EA5E060EF9C451D80C6A6F38B4 /* Pods-wepin_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-wepin_Tests.modulemap"; sourceTree = "<group>"; };
 		8EB95AC4648276F56FBCC696500F3075 /* Pods-wepin_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-wepin_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		941B388D11162E371FECE36FCE5A8D41 /* wepin-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "wepin-umbrella.h"; sourceTree = "<group>"; };
 		995FA14BFC227911E31A79BFC9A02D2C /* Pods-wepin_Tests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-wepin_Tests"; path = Pods_wepin_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		AB02730684C3934255384C19F7586422 /* wepin.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = wepin.modulemap; sourceTree = "<group>"; };
-		B4E07C79525F10D71FD21B2F1F9BE512 /* wepin.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = wepin.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B4E07C79525F10D71FD21B2F1F9BE512 /* wepin.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = wepin.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BA5ACAF41F554322C157B4203DB48658 /* Pods-wepin_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-wepin_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		BEB20F5E253F282CE6AFB6E6A185B2EE /* Pods-wepin_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-wepin_Example.modulemap"; sourceTree = "<group>"; };
 		C189335D039C9C3F2957B7C06CBBAEFB /* Pods-wepin_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-wepin_Tests-umbrella.h"; sourceTree = "<group>"; };
@@ -67,7 +65,7 @@
 		E55EEB8551439A8F96C7FA243D585970 /* Pods-wepin_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-wepin_Example-umbrella.h"; sourceTree = "<group>"; };
 		E652336829BD3E4E3A2FD6D63D20ECB0 /* Pods-wepin_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-wepin_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EA3530ACB61DF8DB3006752964D3BA00 /* Pods-wepin_Example */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-wepin_Example"; path = Pods_wepin_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EACA9A583644F7D8A9833BE72CEFDC09 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		EACA9A583644F7D8A9833BE72CEFDC09 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		ED16592F5AE7394F16F4968C2C84E558 /* Pods-wepin_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-wepin_Example.release.xcconfig"; sourceTree = "<group>"; };
 		FBE398986254FB0ADEBFD94FE44DAF20 /* Pods-wepin_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-wepin_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,7 +167,6 @@
 		C88C17C7BAA459DB94E992DEC4DE6278 /* wepin */ = {
 			isa = PBXGroup;
 			children = (
-				56766509BB00FB1B7E150EE0E10B355B /* ReplaceMe.swift */,
 				B9116E494521C4737FC38638C6840040 /* Pod */,
 				74ABAB040AFE62BEA35C85A1A6EE4CCB /* Support Files */,
 			);
@@ -375,7 +372,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78A4BB6EFA76F1B646AB123B1FECB77C /* ReplaceMe.swift in Sources */,
 				458307D853FAC04362C8275FC676D0D9 /* wepin-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,8 +491,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
