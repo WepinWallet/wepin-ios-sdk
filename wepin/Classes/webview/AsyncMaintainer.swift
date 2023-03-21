@@ -13,7 +13,7 @@ enum KeyForAsyncMaintainer : String {
     func createInstance(for key:KeyForAsyncMaintainer) -> APIAsyncResponserWithParamter {
         switch key {
         case .NativeLoginWepinModel:
-            return WepinSDK.NativeLoginWepinModel()
+            return wepin.NativeLoginWepinModel()
         }
     }
 }
