@@ -15,7 +15,7 @@ struct Param_Native_Response_RedyToWidget: BaseParameter {
 
     var appKey: String
     var domain: String
-    var platform: String
+    var platform: Int
     var attributes: attr?
 
     struct attr: Codable {
@@ -29,7 +29,7 @@ struct Param_Native_Response_RedyToWidget: BaseParameter {
             self.defaultCurrency = defaultCurrency
         }
     }
-    init(appKey:String, domain:String, platform:String, attributes: attr?) {
+    init(appKey:String, domain:String, platform:Int, attributes: attr?) {
         self.appKey = appKey
         self.domain = domain
         self.platform = platform

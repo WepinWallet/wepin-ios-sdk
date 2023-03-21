@@ -44,18 +44,26 @@ public class Wepin {
         UIApplication.shared.windows.first
     }
     
-    public static func bringHimToShow(on: UIView) -> NSLayoutConstraint {
+    public static func bringHimToShow(on: UIView) {
+        
         on.addSubview(viewWeb)
         
+        let statusBarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height
+        print("satatusBarHeight", statusBarHeight)
+        var fixedHeight = on.frame.height - statusBarHeight!
+        print("fixed_height", fixedHeight)
         viewWeb.bottomAnchor.constraint(equalTo: on.bottomAnchor).isActive = true
         viewWeb.leftAnchor.constraint(equalTo: on.safeAreaLayoutGuide.leftAnchor).isActive = true
         viewWeb.rightAnchor.constraint(equalTo: on.safeAreaLayoutGuide.rightAnchor).isActive = true
+        //viewWeb.heightAnchor.constraint(equalToConstant: (on.frame.height - statusBarHeight!) * 6/7).isActive = true
+        //viewWeb.heightAnchor.constraint(equalToConstant: (on.frame.height - statusBarHeight!)).isActive = true
+        viewWeb.heightAnchor.constraint(equalToConstant: fixedHeight).isActive = true
         
-        let constHeight = viewWeb.heightAnchor.constraint(equalToConstant: on.frame.height * 6/7)
-        
-        constHeight.isActive = true
+        //  웹뷰 배경화면 투명처리
+        viewWeb.backgroundColor = UIColor.clear
+        viewWeb.isOpaque = false
+        //
 
-        return constHeight
     }
     
     func dataRemoveAll(){
@@ -72,7 +80,7 @@ public class Wepin {
         viewWeb.frame = .zero
     }
     
-    func getUrl(appKey: String) -> String? {
+    public func getUrl(appKey: String) -> String? {
         var urlString:String? = nil
         
         if (appKey.hasPrefix("ak_live_")) {
@@ -93,8 +101,9 @@ public class Wepin {
         
         let wVConfig = WKWebViewConfiguration()
         wVConfig.applicationNameForUserAgent = wVConfig.applicationNameForUserAgent! + "io.wepin"
+        
         let vW = WKWebView(frame: .zero , configuration: wVConfig)
-                
+        
         vW.translatesAutoresizingMaskIntoConstraints = false
 
         window?.addSubview(vW)
@@ -108,6 +117,59 @@ public class Wepin {
         Wepin.viewWeb.load(req)
     }
     
+
+    public func handleUniversalLink(paramUrl: URL) {
+        
+        if Wepin.viewWeb == nil {
+            print("VIEWEB IS NIL")
+            Wepin.instance().delegate?.onWepinError(errMsg: "VIEWEB IS NIL")
+            return
+        }
+        
+        // 구글로그인 후 유니버셜링크로 위젯에서 네이티브로 돌아올때 쿼리에 파이어베이스 토큰을 넣어줌
+        let urlString = paramUrl.absoluteString
+        print("handleUniversalLink : ", urlString)
+        
+        // URLComponents는 queryItems 객체에 접근 가능
+        guard let urlComponents = URLComponents(string: paramUrl.absoluteString) else {
+            print("URL COMPONENT IS NIL")
+            Wepin.instance().delegate?.onWepinError(errMsg: "URL COMPONENT IS NIL")
+            return
+        }
+               
+        guard let params = urlComponents.queryItems else {
+            print("QUERY ITEMS ARE NOT EXIST")
+            Wepin.instance().delegate?.onWepinError(errMsg: "QUERY ITEMS ARE NOT EXIST")
+            return
+        }
+        
+        guard "token" == params.first?.name else {
+            print("TOKEN NAME IS NOT EXIST")
+            Wepin.instance().delegate?.onWepinError(errMsg: "TOKEN NAME IS NOT EXIST")
+            return
+        }
+        
+        guard let token = params.first?.value else {
+            print("TOKEN VALUE IS NOT EXIST")
+            Wepin.instance().delegate?.onWepinError(errMsg: "TOKEN VALUE IS NOT EXIST")
+            return
+        }
+        
+        print("received firebase token : ", token)
+        
+        let getUrlStr: String? = getUrl(appKey: self.appKey!)
+        var components = URLComponents(string: getUrlStr!)
+        components?.path.append("login")
+        let queryItem = URLQueryItem(name: "token", value: token)
+        components?.queryItems = [queryItem]
+       // let url = URL(string: urlString)
+        let req = URLRequest(url: (components?.url)!)
+        print("component Url : ", components?.url)
+        Wepin.viewWeb.load(req)
+        
+    }
+
+
     public static func viewWebStop() {
         viewWeb?.removeFromSuperview()
         viewWeb = nil
@@ -125,11 +187,13 @@ public class Wepin {
 
         //
         let urlString: String? = getUrl(appKey: self.appKey!)
+        
         if(urlString == nil){
-            Wepin.instance().delegate?.onWepinError(errMsg: "Invalid appKey.")
+            Wepin.instance().delegate?.onWepinError(errMsg: "INVALID APIKEY")
             return
         }
         
+        print("Widget url to load : ", urlString)
         Wepin.viewWebStart(urlString: urlString!)
         self.wepinVC = showWepinWidget(showType: self.widgetAttributes!.type)
 
@@ -143,10 +207,10 @@ public class Wepin {
     
     public func finalize(){
         print("Wepin finalize")
-        if(isInitialized() == false){
-            Wepin.instance().delegate?.onWepinError(errMsg: "WEPIN NOT INITIALIZED")
-            return
-        }
+//        if(isInitialized() == false){
+//            Wepin.instance().delegate?.onWepinError(errMsg: "WEPIN NOT INITIALIZED")
+//            return
+//        }
 
         self.dataRemoveAll()
         
@@ -165,12 +229,20 @@ public class Wepin {
     /// APIs for Widget Open/Close  ====================================================================
     ///
     public func openWidget(_ completionHandler: CompletionHandler? = nil) {
+        
         if(isInitialized() == false){
             Wepin.instance().delegate?.onWepinError(errMsg: "WEPIN NOT INITIALIZED")
             completionHandler?(nil, nil)
             return
         }
 
+        
+        let header = BaseEventRequest.Header(request_from: "native", request_to: "wepin_widget", id: 2678140026900)
+        let body =  BaseEventRequest.Body(command: "open_widget", parameter: "")
+        let request =  BaseEventRequest(header: header, body: body)
+
+        let data = try! JSONEncoder().encode(request)
+        self.wepinVC?.modelGoodListener.timeToEventToWeb(event: EventsFromNaviteToWeb.WEPIN_NATIVE_EVENT, params: data)
         self.wepinVC = showWepinWidget(showType: Wepin.WidgetType.show)
 
         completionHandler?(true, nil)
@@ -335,8 +407,7 @@ func showWepinWidget(showType: Wepin.WidgetType) -> WepinMainViewController {
     let vcWebIn = WepinMainViewController(nibName: nil, bundle: nil)
     vcWebIn.attributes = Wepin.instance().widgetAttributes
     
-    vcWebIn.heightOfMain = 700
-
+    //vcWebIn.heightOfMain = 700
     vcWebIn.prepareInit()
 
     if(showType == Wepin.WidgetType.show){

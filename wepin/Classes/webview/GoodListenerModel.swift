@@ -43,4 +43,18 @@ class GoodListenerModel {
 
         goodResponder.timeToResponseToTheWeb(message: result.stringUTF8)
     }
+    
+    /// event 반송
+    func timeToEventToWeb(event:EventsFromNaviteToWeb, params:Data?) {
+        print("<=<= Native to WebView")
+        print(goodResponder.viewWebInside)
+//        let result = try! encoderForJSON.encode(params!)
+        
+        print("\n--timeToEventToWeb--")
+        print(event)
+        print(params == nil ? "" : params!)
+        print(params == nil ? "" : params!.stringUTF8!)
+        print("-----\n")
+        goodResponder.timeToEventToTheWeb(event: event, of: params?.stringUTF8)
+    }
 }

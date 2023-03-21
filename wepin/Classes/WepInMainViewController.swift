@@ -10,16 +10,18 @@ import Foundation
 
 import WebKit
 
-public class WepinMainViewController: UIViewController {
+public class WepinMainViewController: UIViewController, WKUIDelegate {
     private var constraintHeightOfMain: NSLayoutConstraint?
     
     let modelGoodListener = GoodListenerModel()
-    
-    public var heightOfMain: CGFloat = 10 {
-        didSet {
-            constraintHeightOfMain?.constant = heightOfMain
-        }
-    }
+//
+//    public var heightOfMain: CGFloat = 10 {
+//        didSet {
+//
+//            constraintHeightOfMain?.constant = heightOfMain
+//            print("yskim didset heightOfMain : ", heightOfMain)
+//        }
+//    }
     
     public var attributes: Wepin.WidgetAttributes? = nil
     
@@ -31,8 +33,10 @@ public class WepinMainViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        constraintHeightOfMain = Wepin.bringHimToShow(on: self.view)
+        //constraintHeightOfMain = Wepin.bringHimToShow(on: self.view)
+        Wepin.bringHimToShow(on: self.view)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapToClose(gs:))))
+        Wepin.viewWeb.uiDelegate = self //웹뷰에서 실행하는 window.open() 에 필요!!
     }
     
     @objc private func tapToClose(gs: UITapGestureRecognizer) {
@@ -47,9 +51,32 @@ public class WepinMainViewController: UIViewController {
         super.viewDidDisappear(animated)
         Wepin.makeHimHide()
     }
+    
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView?{
+        
+        print("called by open.window()")
+        
+        let loadUrl : String = navigationAction.request.url!.absoluteString
+        print("loadUrl : ", loadUrl)
+        if (loadUrl.contains("http://") || loadUrl.contains("https://") ) {
+            if #available(iOS 10.0,*) { // ios version 10.0 이상인지 체크
+                if let aString = URL(string:(navigationAction.request.url?.absoluteString )!) {
+                    UIApplication.shared.open(aString, options:[:], completionHandler: { success in
+                    })
+                }
+                if let aString = URL(string:(navigationAction.request.url?.absoluteString )!) {
+                    UIApplication.shared.openURL(aString)
+                }
+            }
+        } else {
+            print("invalid url format")
+        }
+        
+        return nil
+    }
 }
 
-extension WepinMainViewController: WKScriptMessageHandler {
+extension WepinMainViewController: WKScriptMessageHandler{
     
     func prepareMessageHandler() {
         if(Wepin.instance().isInitialized() == false){
@@ -83,7 +110,9 @@ extension WepinMainViewController: WKScriptMessageHandler {
     func loginWepinResponseProcess (token: String) {
         Wepin.instance().wepinVC?.modelGoodListener.asyncLoginWepinResponseProcess(token: token)
     }
+    
 }
+
 
 extension WepinMainViewController : GoodResponderModelDelegate {
     var viewWebInside: WKWebView? {

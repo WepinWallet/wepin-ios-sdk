@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum PlatformType:String {
+enum PlatformType:Int {
     //        case webSDK  = "1"
     //        case aosSDK  = "2"
-    case iosSDK  = "3"
+    case iosSDK  = 3
 }
