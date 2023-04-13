@@ -18,8 +18,8 @@ extension GoodListenerModel {
             case .ready_to_widget:
                 modelInfo = NativeRedyToWidgetModel(request: request)
             case .login_wepin:
-                modelInfoAsync = ASyncMaintainer.shared.returnOrCreateObjectForKey(key: .NativeLoginWepinModel, with: request)
-                modelInfoAsync?.procAfterInit()
+//                modelInfoAsync = ASyncMaintainer.shared.returnOrCreateObjectForKey(key: .NativeLoginWepinModel, with: request)
+//                modelInfoAsync?.procAfterInit()
                 return
             case .set_accounts:
                 modelInfo = NativeSetAccountsModel(request: request)

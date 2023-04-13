@@ -45,6 +45,7 @@ public class Wepin {
     }
     
     public static func bringHimToShow(on: UIView) {
+        print("bringHimToShow")
         
         on.addSubview(viewWeb)
         
@@ -63,6 +64,11 @@ public class Wepin {
         viewWeb.backgroundColor = UIColor.clear
         viewWeb.isOpaque = false
         //
+        
+        //
+        //viewWeb.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+        //viewWeb.uiDelegate = self //웹뷰에서 실행하는 window.open() 에 필요!!
+        viewWeb.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true //window.close에 필요!!
 
     }
     
@@ -95,17 +101,21 @@ public class Wepin {
     }
     
     public static func viewWebStart(urlString: String) {
+        print("viewWebStart loadUrl : " + urlString)
         if viewWeb != nil {
+            print("viewWeb is not nil")
             return
         }
         
+        
         let wVConfig = WKWebViewConfiguration()
         wVConfig.applicationNameForUserAgent = wVConfig.applicationNameForUserAgent! + "io.wepin"
+        wVConfig.preferences.javaScriptCanOpenWindowsAutomatically = true
         
         let vW = WKWebView(frame: .zero , configuration: wVConfig)
         
         vW.translatesAutoresizingMaskIntoConstraints = false
-
+        
         window?.addSubview(vW)
         window?.sendSubviewToBack(vW)
         
@@ -114,18 +124,27 @@ public class Wepin {
         let url = URL(string: urlString)!
         let req = URLRequest(url: url)
 
-        Wepin.viewWeb.load(req)
+//        let testUrlStr = "http://192.168.0.152:5173/"
+//        let url = URL(string: testUrlStr)!
+//        let req = URLRequest(url: url)
+        //Wepin.viewWeb.load(req)
+        viewWeb.load(req)
     }
     
 
     public func handleUniversalLink(paramUrl: URL) {
         
+        
+        
         if Wepin.viewWeb == nil {
             print("VIEWEB IS NIL")
-            Wepin.instance().delegate?.onWepinError(errMsg: "VIEWEB IS NIL")
+            delegate?.onWepinError(errMsg: "VIEWEB IS NIL")
             return
         }
+        //Wepin.viewWebStop()
         
+        
+        //finalize()
         // 구글로그인 후 유니버셜링크로 위젯에서 네이티브로 돌아올때 쿼리에 파이어베이스 토큰을 넣어줌
         let urlString = paramUrl.absoluteString
         print("handleUniversalLink : ", urlString)
@@ -133,25 +152,25 @@ public class Wepin {
         // URLComponents는 queryItems 객체에 접근 가능
         guard let urlComponents = URLComponents(string: paramUrl.absoluteString) else {
             print("URL COMPONENT IS NIL")
-            Wepin.instance().delegate?.onWepinError(errMsg: "URL COMPONENT IS NIL")
+            delegate?.onWepinError(errMsg: "URL COMPONENT IS NIL")
             return
         }
                
         guard let params = urlComponents.queryItems else {
             print("QUERY ITEMS ARE NOT EXIST")
-            Wepin.instance().delegate?.onWepinError(errMsg: "QUERY ITEMS ARE NOT EXIST")
+            delegate?.onWepinError(errMsg: "QUERY ITEMS ARE NOT EXIST")
             return
         }
         
         guard "token" == params.first?.name else {
             print("TOKEN NAME IS NOT EXIST")
-            Wepin.instance().delegate?.onWepinError(errMsg: "TOKEN NAME IS NOT EXIST")
+            delegate?.onWepinError(errMsg: "TOKEN NAME IS NOT EXIST")
             return
         }
         
         guard let token = params.first?.value else {
             print("TOKEN VALUE IS NOT EXIST")
-            Wepin.instance().delegate?.onWepinError(errMsg: "TOKEN VALUE IS NOT EXIST")
+            delegate?.onWepinError(errMsg: "TOKEN VALUE IS NOT EXIST")
             return
         }
         
@@ -165,14 +184,92 @@ public class Wepin {
        // let url = URL(string: urlString)
         let req = URLRequest(url: (components?.url)!)
         print("component Url : ", components?.url)
+        
+//        // for test
+//        print("Widget url to load : ", urlString)
+//        Wepin.viewWebStart(urlString: req.url?.absoluteString ?? "")
+//        self.wepinVC = showWepinWidget(showType: self.widgetAttributes!.type)
+
+        //Wepin.viewWeb.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+        //Wepin.viewWebStart(urlString: req.url?.absoluteString ?? "")
+        
+        //Wepin.viewWebStart(urlString: "https://www.naver.com")
+        //self.wepinVC = showWepinWidget(showType: self.widgetAttributes!.type)
+        
+//
+//        if queryItem.value?.isEmpty == true {
+//            print("token is empty")
+//            // 웹뷰 모든 데이터 삭제
+////            WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), completionHandler: {
+////                (records) -> Void in
+////                for record in records {
+////                    WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+////                    // remove callback
+////                 }
+////             })
+//            //Wepin.viewWebStop()
+//
+//            //self.wepinVC = showWepinWidget(showType: self.widgetAttributes!.type)
+//
+////            // 웹뷰 원하는 데이터만 삭제
+//            let websiteDataTypes = NSSet(array:
+//                                                        [WKWebsiteDataTypeDiskCache, // 디스크 캐시 fail
+//                                                         WKWebsiteDataTypeMemoryCache, // 메모리 캐시 fail
+//                                                         WKWebsiteDataTypeCookies, // 웹 쿠키, never
+//
+//                                                         WKWebsiteDataTypeOfflineWebApplicationCache, // 앱 캐시 fail
+//                                                         WKWebsiteDataTypeWebSQLDatabases, // 웹 SQL 데이터 베이스
+//                                                         WKWebsiteDataTypeIndexedDBDatabases, // 데이터 베이스 정보
+//
+//                                                         WKWebsiteDataTypeLocalStorage, // 로컬 스토리지 never
+//                                                         //WKWebsiteDataTypeSessionStorage // 세션 스토리지
+//                                                        ])
+//                    let date = NSDate(timeIntervalSince1970: 0)
+//            WKWebsiteDataStore.default().removeData(ofTypes: websiteDataTypes as! Set, modifiedSince: date as Date, completionHandler:{
+//                print("initialize webview")
+//
+//            })
+//            Wepin.viewWebStart(urlString: req.url?.absoluteString ?? "")
+//
+//        }else{
+//            Wepin.viewWeb.load(req)
+//        }
+
+        //Wepin.viewWeb.load(req)
+        
+//            // 웹뷰 원하는 데이터만 삭제
+//            let websiteDataTypes = NSSet(array:
+//                                                        [WKWebsiteDataTypeDiskCache, // 디스크 캐시 fail
+//                                                         WKWebsiteDataTypeMemoryCache, // 메모리 캐시 fail
+//                                                         //WKWebsiteDataTypeCookies, // 웹 쿠키, never
+//
+//                                                         WKWebsiteDataTypeOfflineWebApplicationCache, // 앱 캐시 fail
+//                                                         WKWebsiteDataTypeWebSQLDatabases, // 웹 SQL 데이터 베이스
+//                                                         WKWebsiteDataTypeIndexedDBDatabases, // 데이터 베이스 정보
+//
+//                                                         WKWebsiteDataTypeLocalStorage, // 로컬 스토리지 never
+//                                                         WKWebsiteDataTypeSessionStorage // 세션 스토리지
+//                                                        ])
+//                    let date = NSDate(timeIntervalSince1970: 0)
+//            WKWebsiteDataStore.default().removeData(ofTypes: websiteDataTypes as! Set, modifiedSince: date as Date, completionHandler:{
+//                print("initialize webview")
+//
+//            })
+//
+        
+        
+        
+        Wepin.viewWeb.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
         Wepin.viewWeb.load(req)
         
     }
 
 
     public static func viewWebStop() {
+        print("viewWebStop")
         viewWeb?.removeFromSuperview()
         viewWeb = nil
+        
     }
 
     public func initialize(appId: String, appKey: String, attributes: WidgetAttributes,_ completionHandler: CompletionHandler? = nil){
@@ -196,8 +293,6 @@ public class Wepin {
         print("Widget url to load : ", urlString)
         Wepin.viewWebStart(urlString: urlString!)
         self.wepinVC = showWepinWidget(showType: self.widgetAttributes!.type)
-
-        
         completionHandler?(true, nil)
     }
     
@@ -402,8 +497,10 @@ public protocol WepinDelegate {
 /// Internal functions for Wipin  ====================================================================
 ///
 func showWepinWidget(showType: Wepin.WidgetType) -> WepinMainViewController {
-    let rootVc = UIApplication.shared.keyWindow?.rootViewController
     
+    print("showWepinWidget")
+    
+    let rootVc = UIApplication.shared.keyWindow?.rootViewController
     let vcWebIn = WepinMainViewController(nibName: nil, bundle: nil)
     vcWebIn.attributes = Wepin.instance().widgetAttributes
     
@@ -412,7 +509,7 @@ func showWepinWidget(showType: Wepin.WidgetType) -> WepinMainViewController {
 
     if(showType == Wepin.WidgetType.show){
         rootVc?.present(vcWebIn, animated: true)
+        
     }
-    
     return vcWebIn
 }

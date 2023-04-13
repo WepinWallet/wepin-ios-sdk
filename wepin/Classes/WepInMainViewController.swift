@@ -31,12 +31,18 @@ public class WepinMainViewController: UIViewController, WKUIDelegate {
     }
     
     public override func viewDidLoad() {
+        print("viewDidLoad")
         super.viewDidLoad()
-
+        
         //constraintHeightOfMain = Wepin.bringHimToShow(on: self.view)
         Wepin.bringHimToShow(on: self.view)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapToClose(gs:))))
-        Wepin.viewWeb.uiDelegate = self //웹뷰에서 실행하는 window.open() 에 필요!!
+        //웹뷰에서 실행하는 window.open / close 에 필요!!
+        Wepin.viewWeb.uiDelegate = self
+        Wepin.viewWeb.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+        
+        
+//        //
     }
     
     @objc private func tapToClose(gs: UITapGestureRecognizer) {
@@ -44,17 +50,19 @@ public class WepinMainViewController: UIViewController, WKUIDelegate {
     }
     
     public override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear")
         super.viewWillAppear(animated)
     }
     
     public override func viewDidDisappear(_ animated: Bool) {
+        print("viewDidDisappear")
         super.viewDidDisappear(animated)
         Wepin.makeHimHide()
     }
-    
+
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView?{
         
-        print("called by open.window()")
+        print("called by window.open from webview")
         
         let loadUrl : String = navigationAction.request.url!.absoluteString
         print("loadUrl : ", loadUrl)
@@ -63,6 +71,7 @@ public class WepinMainViewController: UIViewController, WKUIDelegate {
                 if let aString = URL(string:(navigationAction.request.url?.absoluteString )!) {
                     UIApplication.shared.open(aString, options:[:], completionHandler: { success in
                     })
+                    
                 }
                 if let aString = URL(string:(navigationAction.request.url?.absoluteString )!) {
                     UIApplication.shared.openURL(aString)
@@ -73,6 +82,10 @@ public class WepinMainViewController: UIViewController, WKUIDelegate {
         }
         
         return nil
+    }
+    
+    public func webViewDidClose(_ webView: WKWebView) {
+        print("webViewDidClose")
     }
 }
 
