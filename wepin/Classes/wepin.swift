@@ -467,13 +467,16 @@ public class Wepin {
         network: network of account
      */
     public struct Account {
-        var address:String
-        var network:String
+
+    public var address:String
+    public var network:String
         
         public init(address: String, network: String) {
               self.address = address
               self.network = network
+            
         }
+        
     }
 }
 
