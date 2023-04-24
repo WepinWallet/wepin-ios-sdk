@@ -36,6 +36,7 @@ struct NativeSetAccountsModel: APIResponserWithParamter {
                 network: account.network
             )
             Wepin.instance().accounts.append(newAcc)
+            Wepin.instance().delegate?.onAccountSet()
         }
 
         result = Param_Native_Response_SetAccounts()

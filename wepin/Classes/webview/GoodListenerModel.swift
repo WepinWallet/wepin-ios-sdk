@@ -12,6 +12,7 @@ class GoodListenerModel {
     weak var goodResponder: GoodResponderModelDelegate!
     let decoderForJSON  = JSONDecoder()
     let encoderForJSON = JSONEncoder()
+    static let interfaceVersion: Int = 1 // sdk<->widget interface version
     
     func requestFromWebUI(messageBody :Any, requestFrom:String) -> (isError:Bool, msgData:Data?) {
         print("ENTER requestFromWebUI")

@@ -17,6 +17,7 @@ struct Param_Native_Response_RedyToWidget: BaseParameter {
     var domain: String
     var platform: Int
     var attributes: attr?
+    var version: Int
 
     struct attr: Codable {
         var type: String
@@ -34,5 +35,7 @@ struct Param_Native_Response_RedyToWidget: BaseParameter {
         self.domain = domain
         self.platform = platform
         self.attributes = attributes
+        self.version = GoodListenerModel.interfaceVersion
+        
     }
 }

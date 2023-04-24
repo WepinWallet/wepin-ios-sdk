@@ -484,15 +484,16 @@ public class Wepin {
 /// Protocols for Wipin  ====================================================================
 ///
 public protocol WepinDelegate {
-    /**
-     Login Provider에 맞게 로그인을 실행 한다.
-     */
-    func login(provider:Wepin.LoginProvider)
     
     /**
      에러 발생시 에러 메세지 반환
      */
     func onWepinError(errMsg: String)
+    
+    /**
+     계정이 생성되었음을 알려줌
+     */
+    func onAccountSet()
     
 }
 

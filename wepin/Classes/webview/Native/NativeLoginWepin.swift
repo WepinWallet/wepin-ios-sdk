@@ -35,7 +35,6 @@ class NativeLoginWepinModel: APIAsyncResponserWithParamter {
             return
         }
 
-        Wepin.instance().delegate?.login(provider: Wepin.LoginProvider(rawValue: param.method)!)
     }
     func asyncResponseSetParam(param: Any) {
         
