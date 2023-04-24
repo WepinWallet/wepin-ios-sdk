@@ -5,9 +5,11 @@ platform :ios, '10.0'
 target 'wepin_Example' do
   pod 'wepin', :path => '../'
 
+  target 'WepinExample' do
+      shared_pods
+  end
+  
   target 'wepin_Tests' do
     inherit! :search_paths
-
-    
   end
 end

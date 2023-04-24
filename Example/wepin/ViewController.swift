@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import WepinSDK
-import Firebase
-import GoogleSignIn
+import wepin
 
 class ViewController: UIViewController {
     @IBOutlet weak var tvResult: UITextView!
