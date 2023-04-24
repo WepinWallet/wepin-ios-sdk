@@ -1,15 +1,14 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, ‘14.5’
 use_frameworks!
 
-platform :ios, '10.0'
+def shared_pods
+    pod 'Firebase/Auth', '~> 6.34.0'
+    pod 'GoogleSignIn', '~> 6.2.1'
+    pod 'wepin'
+end
 
-target 'wepin_Example' do
-  pod 'wepin', :path => '../'
 
-  target 'WepinExample' do
-      shared_pods
-  end
-  
-  target 'wepin_Tests' do
-    inherit! :search_paths
-  end
+target 'WepinExample' do 
+    shared_pods
 end
